@@ -5,6 +5,7 @@ public class ObjectPool : MonoBehaviour
 {
     [SerializeField] private GameObject prefab;
     [SerializeField] int poolSize;
+    [SerializeField] private RectTransform parent;
     
     private Queue<GameObject> _pool;
     
@@ -30,7 +31,7 @@ public class ObjectPool : MonoBehaviour
     /// </summary>
     private void CreateNewObject()
     {
-        GameObject newObject = Instantiate(prefab);
+        GameObject newObject = Instantiate(prefab, parent);
         newObject.SetActive(false);
         _pool.Enqueue(newObject);
     }
@@ -52,7 +53,7 @@ public class ObjectPool : MonoBehaviour
     /// 사용한 오브젝트를 오브젝트 풀로 되돌려 주는 메서드
     /// </summary>
     /// <param name="returnObject">반환할 오브젝트</param>
-    public void ReturnCard(GameObject returnObject)
+    public void ReturnObject(GameObject returnObject)
     {
         returnObject.SetActive(false);
         _pool.Enqueue(returnObject);

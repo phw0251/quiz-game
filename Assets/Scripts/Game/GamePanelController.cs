@@ -10,16 +10,14 @@ public class GamePanelController : MonoBehaviour
     
     private void Start()
     {
-        ShowQuizCard();
+        InitQuizCards();
     }
 
-    private void ShowQuizCard()
+    private void InitQuizCards()
     {
-        var quizCardObject = Instantiate(quizCardPrefab, quizCardParent);
+        var firstCardObject = ObjectPool.Instance.GetObject();
+        var secondCardObject = ObjectPool.Instance.GetObject();
+        var thirdCardObject = ObjectPool.Instance.GetObject();
     }
-    
-    public void OnClickGameOverButton()
-    {
-        GameManager.Instance.QuitGame();
-    }
+
 }
