@@ -5,19 +5,55 @@ using UnityEngine;
 
 public class GamePanelController : MonoBehaviour
 {
-    [SerializeField] private GameObject quizCardPrefab;                        // Quiz Card Prefab
-    [SerializeField] private Transform quizCardParent;                         // Quiz Card가 표시될 UI Parent
+    private GameObject _firstQuizCardObject;
+    private GameObject _secondQuizCardObject;
     
     private void Start()
     {
         InitQuizCards();
+        
+        // 테스트
+        QuizDataController.LoadQuizData();
     }
 
     private void InitQuizCards()
     {
-        var firstCardObject = ObjectPool.Instance.GetObject();
-        var secondCardObject = ObjectPool.Instance.GetObject();
-        var thirdCardObject = ObjectPool.Instance.GetObject();
+        _firstQuizCardObject = ObjectPool.Instance.GetObject();
+        _secondQuizCardObject = ObjectPool.Instance.GetObject();
+        SetQuizCardPosition(_firstQuizCardObject, 0);
+        SetQuizCardPosition(_secondQuizCardObject, 1);
     }
 
+    private void SetQuizCardPosition(GameObject quizCardObject, int index)
+    {
+        var quizCardTransform = quizCardObject.GetComponent<RectTransform>();
+        if (index == 0)
+        {
+            quizCardTransform.anchoredPosition = new Vector2(0, 0);
+            quizCardTransform.localScale = Vector3.one;
+            quizCardTransform.SetAsLastSibling();
+        }
+        else if (index == 1)
+        {
+            quizCardTransform.anchoredPosition = new Vector2(0, 160);
+            quizCardTransform.localScale = Vector3.one * 0.9f;
+            quizCardTransform.SetAsFirstSibling();
+        }
+    }
+
+    private void ChangeQuizCard()
+    {
+        var temp = _firstQuizCardObject;
+        _firstQuizCardObject = _secondQuizCardObject;
+        _secondQuizCardObject = ObjectPool.Instance.GetObject();
+        SetQuizCardPosition(_firstQuizCardObject, 0);
+        SetQuizCardPosition(_secondQuizCardObject, 1);
+        
+        ObjectPool.Instance.ReturnObject(temp);
+    }
+
+    public void OnClickNextButton()
+    {
+        ChangeQuizCard();
+    }
 }

@@ -226,7 +226,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 350, y: -816}
+  m_AnchoredPosition: {x: 0, y: -910}
   m_SizeDelta: {x: 300, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &581546033
@@ -275,7 +275,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 632975502}
         m_TargetAssemblyTypeName: GamePanelController, Assembly-CSharp
-        m_MethodName: OnClickGameOverButton
+        m_MethodName: OnClickNextButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -412,8 +412,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d276c08ae9f4b9d4abc9f581b03db009, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  quizCardPrefab: {fileID: 2750420438619583704, guid: e566dab163e7a784b95f97d9beedbd82, type: 3}
-  quizCardParent: {fileID: 632975499}
 --- !u!1 &671424120
 GameObject:
   m_ObjectHideFlags: 0
@@ -665,7 +663,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Game Over
+  m_text: Change Card
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -773,6 +771,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 2750420438619583704, guid: e566dab163e7a784b95f97d9beedbd82, type: 3}
   poolSize: 3
+  parent: {fileID: 632975499}
 --- !u!4 &1927643270
 Transform:
   m_ObjectHideFlags: 0
