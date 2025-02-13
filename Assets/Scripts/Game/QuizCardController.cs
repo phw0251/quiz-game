@@ -10,7 +10,9 @@ public struct QuizData
     public string description;
     public int type;
     public int answer;
-    public string[] options;
+    public string firstOption;
+    public string secondOption;
+    public string thirdOption;
 }
 
 public class QuizCardController : MonoBehaviour

@@ -10,6 +10,10 @@ public class GamePanelController : MonoBehaviour
     
     private List<QuizData> _quizDataList;
     
+    private int _lastGeneratedQuizIndex;
+    
+    private const int MAX_QUIZ_COUNT = 10;
+    
     private void Start()
     {
         // 테스트
@@ -28,6 +32,9 @@ public class GamePanelController : MonoBehaviour
         
         SetQuizCardPosition(_firstQuizCardObject, 0);
         SetQuizCardPosition(_secondQuizCardObject, 1);
+
+        // 마지막으로 생성된 퀴즈 인덱스
+        _lastGeneratedQuizIndex = 1;
     }
 
     private void OnCompletedQuiz(int cardIndex)
@@ -54,9 +61,19 @@ public class GamePanelController : MonoBehaviour
 
     private void ChangeQuizCard()
     {
+        if (_lastGeneratedQuizIndex >= MAX_QUIZ_COUNT) return;
+        
         var temp = _firstQuizCardObject;
         _firstQuizCardObject = _secondQuizCardObject;
         _secondQuizCardObject = ObjectPool.Instance.GetObject();
+
+        if (_lastGeneratedQuizIndex < _quizDataList.Count - 1)
+        {
+            _lastGeneratedQuizIndex++;
+            _secondQuizCardObject.GetComponent<QuizCardController>()
+                .SetQuiz(_quizDataList[_lastGeneratedQuizIndex], OnCompletedQuiz);
+        }
+        
         SetQuizCardPosition(_firstQuizCardObject, 0);
         SetQuizCardPosition(_secondQuizCardObject, 1);
         
