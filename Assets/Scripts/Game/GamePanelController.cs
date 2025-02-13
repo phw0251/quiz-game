@@ -8,20 +8,31 @@ public class GamePanelController : MonoBehaviour
     private GameObject _firstQuizCardObject;
     private GameObject _secondQuizCardObject;
     
+    private List<QuizData> _quizDataList;
+    
     private void Start()
     {
-        InitQuizCards();
-        
         // 테스트
-        QuizDataController.LoadQuizData();
+        _quizDataList = QuizDataController.LoadQuizData(0);
+        
+        InitQuizCards();
     }
 
     private void InitQuizCards()
     {
         _firstQuizCardObject = ObjectPool.Instance.GetObject();
+        _firstQuizCardObject.GetComponent<QuizCardController>().SetQuiz(_quizDataList[0], OnCompletedQuiz);
+        
         _secondQuizCardObject = ObjectPool.Instance.GetObject();
+        _secondQuizCardObject.GetComponent<QuizCardController>().SetQuiz(_quizDataList[1], OnCompletedQuiz);
+        
         SetQuizCardPosition(_firstQuizCardObject, 0);
         SetQuizCardPosition(_secondQuizCardObject, 1);
+    }
+
+    private void OnCompletedQuiz(int cardIndex)
+    {
+        
     }
 
     private void SetQuizCardPosition(GameObject quizCardObject, int index)
