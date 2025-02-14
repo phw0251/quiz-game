@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -35,6 +36,16 @@ public class QuizCardController : MonoBehaviour
     
     private int _answer;
     
+    private Vector2 _correctBackPanelPosition;
+    private Vector2 _incorrectBackPanelPosition;
+
+    private void Awake()
+    {
+        // 숨겨진 패널의 좌표 저장
+        _correctBackPanelPosition = correctBackPanel.GetComponent<RectTransform>().anchoredPosition;
+        _incorrectBackPanelPosition = incorrectBackPanel.GetComponent<RectTransform>().anchoredPosition;
+    }
+
     public void SetQuiz(QuizData quizData, QuizCardDelegate onCompleted)
     {
         // 1. 퀴즈
@@ -103,17 +114,26 @@ public class QuizCardController : MonoBehaviour
             case QuizCardPanelType.Front:
                 frontPanel.SetActive(true);
                 correctBackPanel.SetActive(false);
-                incorrectBackPanel.SetActive(false);       
+                incorrectBackPanel.SetActive(false);
+                
+                correctBackPanel.GetComponent<RectTransform>().anchoredPosition = _correctBackPanelPosition;
+                incorrectBackPanel.GetComponent<RectTransform>().anchoredPosition = _incorrectBackPanelPosition;
                 break;
             case QuizCardPanelType.CorrectBackPanel:
                 frontPanel.SetActive(false);
                 correctBackPanel.SetActive(true);
                 incorrectBackPanel.SetActive(false);
+                
+                correctBackPanel.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
+                incorrectBackPanel.GetComponent<RectTransform>().anchoredPosition = _incorrectBackPanelPosition;
                 break;
             case QuizCardPanelType.InCorrectBackPanel:
                 frontPanel.SetActive(false);
                 correctBackPanel.SetActive(false);
                 incorrectBackPanel.SetActive(true);
+                
+                correctBackPanel.GetComponent<RectTransform>().anchoredPosition = _correctBackPanelPosition;
+                incorrectBackPanel.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
                 break;
         }    
     }
