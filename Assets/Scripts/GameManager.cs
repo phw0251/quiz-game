@@ -25,9 +25,9 @@ public class GameManager : Singleton<GameManager>
     
     protected override void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        
     }
-
-
+    
     private void OnApplicationPause(bool pauseStatus)
     {
         
