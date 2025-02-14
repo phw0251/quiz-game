@@ -17,6 +17,10 @@ public struct QuizData
 
 public class QuizCardController : MonoBehaviour
 {
+    [SerializeField] private GameObject frontPanel;
+    [SerializeField] private GameObject correctBackPanel;
+    [SerializeField] private GameObject incorrectBackPanel;
+    
     [SerializeField] private TMP_Text questionText;
     [SerializeField] private TMP_Text descriptionText;
     [SerializeField] private Button[] optionButtons;
@@ -24,6 +28,8 @@ public class QuizCardController : MonoBehaviour
     [SerializeField] private GameObject threeOptionButtons;
     [SerializeField] private GameObject oxButtons;
     
+    private enum QuizCardPanelType { Front, CorrectBackPanel, InCorrectBackPanel }
+
     public delegate void QuizCardDelegate(int cardIndex);
     private event QuizCardDelegate onCompleted;
     
@@ -37,11 +43,13 @@ public class QuizCardController : MonoBehaviour
         // 4. 정답
         // 5. 보기 (1,2,3)
         
+        // Front Panel 표시
+        SetQuizCardPanelActive(QuizCardPanelType.Front);
+        
         // 퀴즈 데이터 표현
         questionText.text = quizData.question;
         _answer = quizData.answer;
-        
-        // descriptionText.text = quizData.description;
+        descriptionText.text = quizData.description;
 
         if (quizData.type == 0)
         {
@@ -74,22 +82,70 @@ public class QuizCardController : MonoBehaviour
     {
         if (buttonIndex == _answer)
         {
-            // 정답
             Debug.Log("정답!");
+            // TODO: 정답 연출
+            
+            SetQuizCardPanelActive(QuizCardPanelType.CorrectBackPanel);
         }
         else
         {
             Debug.Log("오답~");
+            // TODO: 오답 연출
+            
+            SetQuizCardPanelActive(QuizCardPanelType.InCorrectBackPanel);
         }
     }
-
-    public void OnClickNextQuizButton()
+    
+    private void SetQuizCardPanelActive(QuizCardPanelType quizCardPanelType)
     {
-        
+        switch (quizCardPanelType)
+        {
+            case QuizCardPanelType.Front:
+                frontPanel.SetActive(true);
+                correctBackPanel.SetActive(false);
+                incorrectBackPanel.SetActive(false);       
+                break;
+            case QuizCardPanelType.CorrectBackPanel:
+                frontPanel.SetActive(false);
+                correctBackPanel.SetActive(true);
+                incorrectBackPanel.SetActive(false);
+                break;
+            case QuizCardPanelType.InCorrectBackPanel:
+                frontPanel.SetActive(false);
+                correctBackPanel.SetActive(false);
+                incorrectBackPanel.SetActive(true);
+                break;
+        }    
     }
-
+    
     public void OnClickExitButton()
     {
         
     }
+
+    #region Correct Back Panel
+    /// <summary>
+    /// 다음 버튼 이벤트
+    /// </summary>
+    public void OnClickNextQuizButton()
+    {
+        
+    }
+    
+    #endregion
+
+    #region Incorrect Back Panel
+
+    /// <summary>
+    /// 다시도전 버튼 이벤트
+    /// </summary>
+    public void OnClickRetryQuizButton()
+    {
+        
+    }
+    
+    #endregion
+
+
+
 }
