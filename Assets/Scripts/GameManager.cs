@@ -27,11 +27,6 @@ public class GameManager : Singleton<GameManager>
     {
         
     }
-    
-    private void OnApplicationPause(bool pauseStatus)
-    {
-        
-    }
 
     private void OnApplicationQuit()
     {
