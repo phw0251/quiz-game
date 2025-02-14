@@ -167,7 +167,18 @@ public class QuizCardController : MonoBehaviour
     /// </summary>
     public void OnClickRetryQuizButton()
     {
-        
+        if (GameManager.Instance.heartCount > 0)
+        {
+            GameManager.Instance.heartCount--;
+            heartCountText.text = GameManager.Instance.heartCount.ToString();
+            
+            SetQuizCardPanelActive(QuizCardPanelType.Front);
+        }
+        else
+        {
+            // 하트가 부족해서 다시도전 불가
+            // TODO: 하트 부족 알림
+        }
     }
     
     #endregion
