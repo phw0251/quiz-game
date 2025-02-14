@@ -27,6 +27,8 @@ public class QuizCardController : MonoBehaviour
     public delegate void QuizCardDelegate(int cardIndex);
     private event QuizCardDelegate onCompleted;
     
+    private int _answer;
+    
     public void SetQuiz(QuizData quizData, QuizCardDelegate onCompleted)
     {
         // 1. 퀴즈
@@ -37,6 +39,8 @@ public class QuizCardController : MonoBehaviour
         
         // 퀴즈 데이터 표현
         questionText.text = quizData.question;
+        _answer = quizData.answer;
+        
         // descriptionText.text = quizData.description;
 
         if (quizData.type == 0)
@@ -60,5 +64,32 @@ public class QuizCardController : MonoBehaviour
         }
         
         this.onCompleted = onCompleted;
+    }
+
+    /// <summary>
+    /// 퀴즈의 정답을 선택하기 위한 버튼
+    /// </summary>
+    /// <param name="buttonIndex"></param>
+    public void OnClickOptionButton(int buttonIndex)
+    {
+        if (buttonIndex == _answer)
+        {
+            // 정답
+            Debug.Log("정답!");
+        }
+        else
+        {
+            Debug.Log("오답~");
+        }
+    }
+
+    public void OnClickNextQuizButton()
+    {
+        
+    }
+
+    public void OnClickExitButton()
+    {
+        
     }
 }
