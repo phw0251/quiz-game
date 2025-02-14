@@ -22,12 +22,15 @@ public class QuizCardController : MonoBehaviour
     [SerializeField] private GameObject correctBackPanel;
     [SerializeField] private GameObject incorrectBackPanel;
     
+    // Front Panel
     [SerializeField] private TMP_Text questionText;
     [SerializeField] private TMP_Text descriptionText;
     [SerializeField] private Button[] optionButtons;
-
     [SerializeField] private GameObject threeOptionButtons;
     [SerializeField] private GameObject oxButtons;
+    
+    // Incorrect Back Panel
+    [SerializeField] private TMP_Text heartCountText;
     
     private enum QuizCardPanelType { Front, CorrectBackPanel, InCorrectBackPanel }
 
@@ -83,6 +86,9 @@ public class QuizCardController : MonoBehaviour
         }
         
         this.onCompleted = onCompleted;
+        
+        // Incorrect Back Panel
+        heartCountText.text = GameManager.Instance.heartCount.ToString();
     }
 
     /// <summary>
@@ -149,7 +155,7 @@ public class QuizCardController : MonoBehaviour
     /// </summary>
     public void OnClickNextQuizButton()
     {
-        
+        onCompleted?.Invoke(0);
     }
     
     #endregion
@@ -165,7 +171,4 @@ public class QuizCardController : MonoBehaviour
     }
     
     #endregion
-
-
-
 }

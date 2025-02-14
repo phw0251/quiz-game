@@ -39,7 +39,7 @@ public class GamePanelController : MonoBehaviour
 
     private void OnCompletedQuiz(int cardIndex)
     {
-        
+        ChangeQuizCard();
     }
 
     private void SetQuizCardPosition(GameObject quizCardObject, int index)
@@ -78,10 +78,5 @@ public class GamePanelController : MonoBehaviour
         SetQuizCardPosition(_secondQuizCardObject, 1);
         
         ObjectPool.Instance.ReturnObject(temp);
-    }
-
-    public void OnClickNextButton()
-    {
-        ChangeQuizCard();
     }
 }
