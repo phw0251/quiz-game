@@ -20,6 +20,9 @@ public class QuizCardController : MonoBehaviour
     [SerializeField] private TMP_Text questionText;
     [SerializeField] private TMP_Text descriptionText;
     [SerializeField] private Button[] optionButtons;
+
+    [SerializeField] private GameObject threeOptionButtons;
+    [SerializeField] private GameObject oxButtons;
     
     public delegate void QuizCardDelegate(int cardIndex);
     private event QuizCardDelegate onCompleted;
@@ -35,13 +38,26 @@ public class QuizCardController : MonoBehaviour
         // 퀴즈 데이터 표현
         questionText.text = quizData.question;
         // descriptionText.text = quizData.description;
-        
-        var firstButtonText = optionButtons[0].GetComponentInChildren<TMP_Text>();
-        firstButtonText.text = quizData.firstOption;
-        var secondButtonText = optionButtons[1].GetComponentInChildren<TMP_Text>();
-        secondButtonText.text = quizData.secondOption;
-        var thirdButtonText = optionButtons[2].GetComponentInChildren<TMP_Text>();
-        thirdButtonText.text = quizData.thirdOption;
+
+        if (quizData.type == 0)
+        {
+            // 3지선다 퀴즈
+            threeOptionButtons.SetActive(true);
+            oxButtons.SetActive(false);
+            
+            var firstButtonText = optionButtons[0].GetComponentInChildren<TMP_Text>();
+            firstButtonText.text = quizData.firstOption;
+            var secondButtonText = optionButtons[1].GetComponentInChildren<TMP_Text>();
+            secondButtonText.text = quizData.secondOption;
+            var thirdButtonText = optionButtons[2].GetComponentInChildren<TMP_Text>();
+            thirdButtonText.text = quizData.thirdOption;
+        }
+        else if (quizData.type == 1)
+        {
+            // OX 퀴즈
+            threeOptionButtons.SetActive(false);
+            oxButtons.SetActive(true);
+        }
         
         this.onCompleted = onCompleted;
     }
